@@ -14,6 +14,9 @@ cp files/options-ssl-apache.conf /etc/letsencrypt/
 a2enmod proxy_http
 a2enmod cgi
 a2enmod ssl
+a2enmod headers
+a2enmod rewrite
+
 a2dissite "*"
 rm /etc/apache2/sites-available/*
 cp files/apache2-conf/* /etc/apache2/sites-available/
