@@ -6,6 +6,8 @@
 ################################################
 set -e
 
+source config.sh
+
 cp config.sh /root/
 cd /root/
 rm -rf ihm/
@@ -18,6 +20,7 @@ cd /root/
 rm -rf cs-com/
 git clone https://github.com/Own-Mailbox/cs-com
 cd cs-com/client/
+sed -i request.h -e "s#proxy.omb.one#$FQDN#"
 make && make install
 
 cd /root/
