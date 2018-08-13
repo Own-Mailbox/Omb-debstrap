@@ -35,6 +35,9 @@ msg_if_failed  "Error while setting up rng-tools."
 ./setup-scripts/hostname.sh
 msg_if_failed  "Error while setting up hostname."
 
+./setup-scripts/redsocks.sh
+msg_if_failed  "Error while setting up redsocks."
+
 pkill python2
 su mailpile -c ./setup-scripts/mailpile.sh
 msg_if_failed  "Error while setting up mailpile."
@@ -56,6 +59,9 @@ msg_if_failed  "Error while setting up torsocks."
 
 ./setup-scripts/iptables.sh
 msg_if_failed  "Error while setting up iptables."
+
+killall redsocks
+redsocks
 
 # Temporarily use google dns server and flush iptables
 # to make sure the upgrade will be overwritten at first startup
