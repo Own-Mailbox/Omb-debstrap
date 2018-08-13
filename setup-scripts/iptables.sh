@@ -1,7 +1,7 @@
 #!/bin/bash
 
 ###############################################
-#	 Setup and save iptables into the system 
+#	 Setup and save iptables into the system
 ###############################################
 
 set -e
@@ -25,7 +25,7 @@ iptables -A INPUT -s 10.0.0.0/8     -j ACCEPT
 iptables -A INPUT -s 172.16.0.0/12  -j ACCEPT
 
 # Allow established or related connections
-iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT 
+iptables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
 # Drop everyhting else
 iptables -A INPUT -j DROP
@@ -48,6 +48,27 @@ iptables -A OUTPUT -d 172.16.0.0/12  -j ACCEPT
 iptables -A OUTPUT -j DROP
 
 ################################################################
+#			REDSOCKS
+################################################################
+
+iptables -t nat -N REDSOCKS
+iptables -t nat -A REDSOCKS -d 0.0.0.0/8 -j RETURN
+iptables -t nat -A REDSOCKS -d 10.0.0.0/8 -j RETURN
+iptables -t nat -A REDSOCKS -d 127.0.0.0/8 -j RETURN
+iptables -t nat -A REDSOCKS -d 127.0.0.1/8 -j RETURN
+iptables -t nat -A REDSOCKS -d 169.254.0.0/16 -j RETURN
+iptables -t nat -A REDSOCKS -d 172.16.0.0/12 -j RETURN
+iptables -t nat -A REDSOCKS -d 192.168.0.0/16 -j RETURN
+iptables -t nat -A REDSOCKS -d 224.0.0.0/4 -j RETURN
+iptables -t nat -A REDSOCKS -d 240.0.0.0/4 -j RETURN
+
+iptables -t nat -A REDSOCKS -p tcp --dport 11371 -j REDIRECT --to-ports 12345
+
+iptables -t nat -A OUTPUT -p tcp -j REDSOCKS
+
+iptables -t nat -A PREROUTING -p tcp --dport 11371 -j REDSOCKS
+
+################################################################
 #			IPV6
 ################################################################
 
@@ -59,7 +80,7 @@ ip6tables -A OUTPUT -j DROP
 ip6tables -A INPUT -s ::1 -d ::1 -j ACCEPT
 
 # Allow established or related connections
-ip6tables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT 
+ip6tables -A INPUT -m conntrack --ctstate ESTABLISHED,RELATED -j ACCEPT
 
 # Drop everyhting else
 ip6tables -A INPUT -j DROP
