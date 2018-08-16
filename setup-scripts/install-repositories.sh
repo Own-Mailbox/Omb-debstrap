@@ -11,9 +11,9 @@ source config.sh
 cp config.sh /root/
 cd /root/
 rm -rf ihm/
-git clone https://github.com/Own-Mailbox/ihm
-cp config.sh ihm/omb-config.sh
-cd ihm/
+git clone https://github.com/Own-Mailbox/Setup-web-interface.git
+cp config.sh Setup-web-interface/config.sh
+cd Setup-web-interface/
 make
 
 cd /root/
