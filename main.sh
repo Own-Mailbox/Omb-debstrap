@@ -57,18 +57,17 @@ chown tor /var/log/tor.log
 echo "AllowInbound 1" >> /etc/tor/torsocks.conf
 msg_if_failed  "Error while setting up torsocks."
 
+
+# Temporarily use google dns server and flush iptables
+# to make sure the upgrade will be overwritten at first startup
+echo "nameserver 8.8.8.8" > /etc/resolv.conf
+apt-get upgrade -y
+
 ./setup-scripts/iptables.sh
 msg_if_failed  "Error while setting up iptables."
 
 killall redsocks
 redsocks
-
-# Temporarily use google dns server and flush iptables
-# to make sure the upgrade will be overwritten at first startup
-echo "nameserver 8.8.8.8" > /etc/resolv.conf
-iptables -F
-ip6tables -F
-apt-get upgrade -y
 
 # Make sure to fetch time every hour in the crontab
 (crontab -l 2>/dev/null; echo "00 * * * * service ntp stop; ntpdate -s ntp.univ-lyon1.fr; service ntp start") | crontab -

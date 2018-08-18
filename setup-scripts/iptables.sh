@@ -62,12 +62,17 @@ iptables -t nat -A REDSOCKS -d 192.168.0.0/16 -j RETURN
 iptables -t nat -A REDSOCKS -d 224.0.0.0/4 -j RETURN
 iptables -t nat -A REDSOCKS -d 240.0.0.0/4 -j RETURN
 
-#Redirect GPG key server protocol to tor (port 11371)
+#Redirect GPG key server (port 11371) and http(s) protocol to tor
+iptables -t nat -A REDSOCKS -p tcp --dport 443 -j REDIRECT --to-ports 12345
+iptables -t nat -A REDSOCKS -p tcp --dport 80 -j REDIRECT --to-ports 12345
 iptables -t nat -A REDSOCKS -p tcp --dport 11371 -j REDIRECT --to-ports 12345
 
+iptables -t nat -A OUTPUT -m owner --uid-owner tor -j ACCEPT
 iptables -t nat -A OUTPUT -p tcp -j REDSOCKS
 
-#Redirect GPG key server protocol to tor (port 11371)
+#Redirect GPG key server (port 11371) protocol and http(s) to tor 
+iptables -t nat -A PREROUTING -p tcp --dport 443 -j REDSOCKS
+iptables -t nat -A PREROUTING -p tcp --dport 80 -j REDSOCKS
 iptables -t nat -A PREROUTING -p tcp --dport 11371 -j REDSOCKS
 
 ################################################################
