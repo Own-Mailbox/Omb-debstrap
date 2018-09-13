@@ -6,13 +6,13 @@ Installation instructions
 ----
 Before running these steps make sure you have a clean and fresh install of debian Jessie with no particular configuration at all (except network), that is correctly connected to your local network in dhcp.
 
-Warning!!! This will transform your machine into an Own-Mailbox, do not execute this on a machine that you use for something else than hosting Own-Mailbox. Do not Install on a computer that you use as a desktop or laptop computer. Do not install on a machine that is not on your local network.
+WARNING!!! *This will transform your machine into an Own-Mailbox, do not execute this on a machine that you use for something else than hosting Own-Mailbox. Do not Install on a computer that you use as a desktop or laptop computer. Do not install on a machine that is not on your local network. If you want to test you'd probably be better to install it in a virtual machine.
 
 In order to install Own-Mailbox run this command:
 
 + ./main.sh
 
-Testing with Vagrant and virtualbox
+Testing in a virtual machine with Vagrant and qemu
 ----
 Install vagrant-libvirt. In order to build the own-mailbox vm, run these commands as normal user (your root password will be requested):
 

@@ -3,8 +3,8 @@
 vagrant up
 sleep 3;
 sshconfig=$(vagrant ssh-config)
-ip=$(echo "$sshconfig" | grep HostName | awk '{print $2}')
-ident=$(echo "$sshconfig" | grep IdentityFile | awk '{print $2}')
+ip=$(printf "$sshconfig" | grep HostName | awk '{print $2}')
+ident=$(printf "$sshconfig" | grep IdentityFile | awk '{print $2}')
 scp -i $ident -o "StrictHostKeyChecking no" -r ../../debstrap vagrant@$ip:/tmp/
 ssh -i $ident -o "StrictHostKeyChecking no" vagrant@$ip  "sudo apt-get update"
 ssh -i $ident -o "StrictHostKeyChecking no" vagrant@$ip  "sudo apt-get -y upgrade"
