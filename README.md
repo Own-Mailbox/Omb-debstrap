@@ -14,14 +14,14 @@ In order to install Own-Mailbox run this command:
 
 Testing with Vagrant and virtualbox
 ----
-Install vagrant and virtualbox. The following command will install your own-mailbox:
+Install vagrant-libvirt. In order to build the own-mailbox vm, run these commands as normal user (your root password will be requested):
 
 + cd Vagrant
-+ vagrant up
++ ./build-vm.sh
 
-You can access the vm web interface at:
+The web interface will open in firefox at the end of the build. You can the re-access it with:
 
-http://127.0.0.1:8080
++ ./access-web-gui.sh
 
 You may ssh into the vm with:
 
