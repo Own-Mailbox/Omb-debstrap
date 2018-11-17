@@ -25,12 +25,15 @@ Vagrant.configure("2") do |config|
     # Libvirt storage pool name, where box image and instance snapshots will
     # be stored.
     libvirt.storage_pool_name = "default"
+    
+        # Pass through /dev/random from the host to the VM
+    libvirt.random :model => 'random'
 
     # Set a prefix for the machines that's different than the project dir name.
     #libvirt.default_prefix = ''
 end
   
-  config.vm.box = "debian/jessie64"
+  config.vm.box = "debian/stretch64"
   config.vm.network :forwarded_port, guest: 80, host: 8080
 
 end

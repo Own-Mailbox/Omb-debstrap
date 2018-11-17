@@ -51,8 +51,11 @@ chown www-data /etc/omb/
 echo "nameserver 127.0.0.1" > /etc/resolv.conf.head
 
 cp files/torrc /etc/tor/torrc
+cp files/torrc-consult /etc/tor/torrc-consult
 touch /var/log/tor.log
 chown tor /var/log/tor.log
+rm /etc/init.d/tor
+systemctl disable tor
 
 echo "AllowInbound 1" >> /etc/tor/torsocks.conf
 msg_if_failed  "Error while setting up torsocks."
@@ -60,8 +63,9 @@ msg_if_failed  "Error while setting up torsocks."
 
 # Temporarily use google dns server and flush iptables
 # to make sure the upgrade will be overwritten at first startup
+unlink /etc/resolv.conf
 echo "nameserver 8.8.8.8" > /etc/resolv.conf
-apt-get upgrade -y
+DEBIAN_FRONTEND=noninteractive  apt-get upgrade -y
 
 ./setup-scripts/iptables.sh
 msg_if_failed  "Error while setting up iptables."
@@ -75,6 +79,7 @@ redsocks
 # Make sure to sync every minute
 (crontab -l 2>/dev/null; echo "* * * * * sync") | crontab -
 
+echo "nameserver 127.0.0.1" > /etc/resolv.conf
 echo "Installation done, please reboot."
 
 exit 0

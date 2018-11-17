@@ -7,6 +7,7 @@ while true; do
     ps -ae | grep -v tor-survey | grep tor
     if [ "$?" -ne "0" ]; then
         su tor -c tor&
+        su tor -c "tor -f /etc/tor/torrc-consult &"
     fi
     sleep 10
   done

@@ -23,21 +23,22 @@ ntpdate -s 195.154.174.209;
 ntpdate -s 92.222.227.225;
 service ntp start
 
-
+killall tor;
 sleep 5;
 # Start Tor
+#Instance de service caché
 su tor -c tor&
+#Instance de consultation
+#su tor -c "tor -f /etc/tor/torrc-consult &"
 
 
 # Start Mailpile
 su mailpile -c "cd ~/Mailpile && ./mp --www=127.0.0.1:33411/Mailpile/ --wait &"
 
 # Start ttdnsd: DNS resolver over tor
-ttdnsd -l
-echo "nameserver 127.0.0.1" > /etc/resolv.conf
+/etc/start-ttdnsd.sh >/dev/null 2>&1 &
 
 # Launching survey scripts
-/etc/ttdnsd-survey.sh >/dev/null 2>&1 &
 /etc/tor-survey.sh >/dev/null 2>&1 &
 
 # Display the IP address

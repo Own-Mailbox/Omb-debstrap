@@ -1,10 +1,10 @@
 Own-Mailbox Debian install
 =========
-These scripts will allow you to transform a machine running Debian Jessie into an Own-Mailbox.
+These scripts will allow you to transform a machine running Debian Stretch into an Own-Mailbox.
 
 Installation instructions
 ----
-Before running these steps make sure you have a clean and fresh install of debian Jessie with no particular configuration at all (except network), that is correctly connected to your local network in dhcp.
+Before running these steps make sure you have a clean and fresh install of debian Stretch with no particular configuration at all (except network), that is correctly connected to your local network in dhcp.
 
 **WARNING!!!** This will transform your machine into an Own-Mailbox, **do not execute this on a machine that is not exclusively dedicated to hosting Own-Mailbox**. Do not Install on a computer that you use as a desktop or laptop computer. Do not install on a machine that is not on your local network. **If you just want to test you'd probably be better to install it in a virtual machine.**
 
